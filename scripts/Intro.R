@@ -7,7 +7,8 @@
 rm(list = ls())
 
 # Set your working directory -- This is where R goes to look for files and save stuff by default. You will need to do this for each computer you run your script file on. In RStudio, you can go to Session -> Set Working Directory -> Choose Directory and select a folder from a drop down menu. For me, this looks like:
-setwd("~/Dropbox/RA_and_Consulting_Work/ISSR_Consulting_Work/Intro_To_R")
+setwd("C:/Users/kfoley/Documents/GitHub/ISSR_Data_Science")
+
 
 
 
@@ -66,7 +67,7 @@ free_lunch <- rep(TRUE,times = 10)
 data <-data.frame(student_id,grades,class,free_lunch, stringsAsFactors = FALSE)
 
 #set column names
-colnames(data) <- c("Student ID", "Student Grade","Class","Free Lunch?")
+colnames(data) <- c("Student_ID", "Grades","Class","Free_Lunch?")
 
 #lets search through our data and take subsets 
 
