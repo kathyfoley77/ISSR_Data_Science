@@ -1,17 +1,17 @@
 {
     "contents" : "##############################################################################################\n#THIS IS THE COPY TO USE FOR IPEDS INDICATORS DATA\n#USES RBIND.FILL TO DEAL WITH DIFFERING NUMBERS OF COLUMNS IN CSVS\n#WILL REQUIRE SOME COMBINING OF COLUMNS LATER, IN TABLEAU (can simply use filters for that)\n##############################################################################################\n\n\n\n# to reuse this syntax for each category of ipeds data, just change the path for the FIRST setwd.\n\ngetwd()\nsetwd(\"P:/DATA/WORK/Critical Indicators/2015 Update/IPEDS data for Indicators Viz/ipeds enrollment\")\nlibrary(plyr)\nlibrary(gtools)\n\n\n#subset the WD above to be used later when we write the bound file out to the directory.\nfilename = gsub(\".*/\", \"\", getwd())\n\n\n# create empty list to be populated with individual dataframes\n\ndflist=list()\n\n# reads in all files in wd and assigns each one a unique name, with no spaces.\n# checknames = FALSE prevents R from replacing spcaces with \".\" in column names\n# gsub trims column names to remove everything before the \".\" that ipeds columns come with\n#last line in the loop stores each unique df as a member of a list (dflist)\n\n\nfor (i in 1:length(list.files())){\n  ds <- read.csv(list.files()[i], check.names=FALSE)\n  colnames(ds)=gsub(\".*\\\\.\", \"\", colnames(ds))\n    dflist [[i]]<- assign(paste(\"ds\", i,sep=\"\"), ds)\n}\n\nall<-rbind.fill(dflist)\n\n\n#next, change \"year\" column to be either fall or FY based on how data come down from ipeds.\n#also, in cases where ipeds data are \"fall\" create a new fiscal year column that contains fall year +1\n#this will enable various files to be joined in tableau on \"fiscal year\"\n\nif (grepl(\"admissions\", filename)){\n  all<-rename(all, c(\"year\"=\"Fall\"))\n  all$Fiscal_Year <- (all$Fall + 1)\n} else if (grepl (\"enroll\", filename)) {\n  all<-rename(all, c(\"year\"=\"Fall\"))\n  all$Fiscal_Year <- (all$Fall + 1)\n} else if (grepl(\"grad\", filename)){\n  all<-rename(all, c(\"year\"=\"Fall\"))\n  all$Fiscal_Year <- (all$Fall + 1)\n} else if (grepl(\"HR\", filename)){\n  all<-rename(all, c(\"year\"=\"Fall\"))\n  all$Fiscal_Year <- (all$Fall + 1)\n} else \n  all<-rename(all, c(\"year\"=\"Fiscal_Year\"))\n\n\n\n\n\n\n\n#next, change wd to be a folder that will contain just the bound files, for tableau\n# DO NOT need to change this path each time you run a new chunk of IPEDS data\n\nsetwd(\"P:/DATA/WORK/Critical Indicators/2015 Update/IPEDS data for Indicators Viz/ipeds bound files for tableau\")\n\n#THEN write the bound csv to that directory.  uses \"filename\" that was created above to save with the appropriate name.\n\nwrite.csv(all, file =paste(filename, \".csv\", sep=\"\"), row.names = FALSE)\n\n\n\n\n\n#THEN clear out the enrvironment of files before running this for the next set of csv files.\n\nrm(list = ls())\n\n\n\n\n",
-    "created" : 1433180605598.000,
+    "created" : 1433271291368.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
     "hash" : "1214244049",
-    "id" : "3D6DC105",
+    "id" : "7A900164",
     "lastKnownWriteTime" : 1433179546,
     "path" : "C:/Users/kfoley/Desktop/rbind syntax for ipeds indicators3.R",
     "project_path" : null,
     "properties" : {
     },
-    "relative_order" : 3,
+    "relative_order" : 4,
     "source_on_save" : false,
     "type" : "r_source"
 }

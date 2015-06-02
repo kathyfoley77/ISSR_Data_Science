@@ -205,22 +205,25 @@ cat("There were a total of",total_token_count,"tokens used in all documents and 
 # 1. Write a function that counts the number of times a given word appears in 
 # all 100 bills.
 
-#######neither of the two attpemst below worked.  
+#######neither of the two attempts below worked.  
 # leaving here as evidence of what I tried
 
 
 wordcount<- function(word){
   tally <-0
   for(i in 1:100) {
-       if (grepl(word, bill.text.list[[i]]$text)) {
+       if (grepl(word, clean_bill_text[[i]]$text)) {
          tally<- (tally+1)
        }
   }
 return(tally)
 }
+library(stringr)
+
+
 wordcount<- function(word){
   for(i in 1:100) {
-    tally <- str_count(bill.text.list[[i]]$text, word)
+    tally <- str_count(clean_bill_text[[i]]$text, word)
   }
   return(tally)
   }
