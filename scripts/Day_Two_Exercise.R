@@ -288,7 +288,7 @@ Generate_Sociomatrix <- function(list_index, raw_data_list, num_bills){
     #find all of the cosponsors
     for(k in 1: length(temp[,1])){ #for every Senator
       if(temp[k,j] == 2){
-        Sociomatrix[sponsor,k] <- Sociomatrix[sponsor,k] + 1
+        Sociomatrix[k, sponsor] <- Sociomatrix[k, sponsor] + 1
       } 
     }
   }
